@@ -15,46 +15,11 @@ const Chatbot = () => {
 
     try {
       const apiResponse = await sendMessageToApi(newMessage);
-
-      // Assuming apiResponse is the list of user objects
-      if (Array.isArray(apiResponse)) {
-        apiResponse.forEach((user) => {
-          const userDetails = `
-            Name: ${user.name}
-            Email: ${user.email}
-            Phone: ${user.phone}
-            Full-Time Salary: $${user.fullTimeSalary}
-            Part-Time Salary: $${user.partTimeSalary}
-            Skills: ${user.skills.join(", ")}
-
-            Work Experience:
-            ${user.workExperience.map(
-              (experience) => `
-                Role: ${experience.role}
-                Company: ${experience.company}
-                Duration: ${experience.startDate} - ${experience.endDate}
-                Description: ${experience.description}
-              `
-            ).join("\n")}
-
-            Education:
-            ${user.education.map(
-              (education) => `
-                Degree: ${education.degree} in ${education.major}
-                School: ${education.school}
-                Grade: ${education.grade}
-                Duration: ${education.startDate} - ${education.endDate}
-              `
-            ).join("\n")}
-          `;
-
-          const botMessage = { text: userDetails, isUser: false };
-          setMessages((prevMessages) => [...prevMessages, botMessage]);
-        });
-      } else {
+        console.log("API response:");
+        console.log(apiResponse);
         const botMessage = { text: apiResponse, isUser: false };
+        console.log(botMessage);
         setMessages((prevMessages) => [...prevMessages, botMessage]);
-      }
     } catch (error) {
       console.error("Error sending message:", error);
       const errorMessage = {
